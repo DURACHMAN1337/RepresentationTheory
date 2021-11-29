@@ -5,19 +5,22 @@ import Services.MatricesServiceBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SpnC implements LieAlgebra {
+public class OnC implements LieAlgebra {
     private static MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
-    private static LieAlgebra spnC = new SpnC();
+    private static LieAlgebra lieAlgebra = new OnC();
+
 
     public static void main(String[] args) {
         int modP = 3;
-        ArrayList<int[][]> matricesF = spnC.generateSpecificMatrices(4);
-        ArrayList<int[][]> matricesH = spnC.generateMatricesH(4);
-        ArrayList<GeomVector> vectorsA = spnC.generateVectorsA(matricesH, matricesF);
-        ArrayList<GeomVector> vectorsB = spnC.generateVectorsB(vectorsA,modP);
-        System.out.println(vectorsA.toString());
-        System.out.println(vectorsB.toString());
-        matricesServiceBean.printListOfMatrices(matricesF);
+        ArrayList<int[][]> specificMatrices = lieAlgebra.generateSpecificMatrices(4);
+        ArrayList<int[][]> matricesH = lieAlgebra.generateMatricesH(4);
+        ArrayList<GeomVector> vectorsA = lieAlgebra.generateVectorsA(matricesH, specificMatrices);
+        ArrayList<GeomVector> vectorsB = lieAlgebra.generateVectorsB(vectorsA,modP);
+
+        System.out.println((specificMatrices.size() + matricesH.size()) +  "размер \n");
+        matricesServiceBean.printListOfMatrices(matricesH);
+        System.out.println("______________________________");
+        matricesServiceBean.printListOfMatrices( specificMatrices);
     }
 
     @Override
@@ -43,22 +46,8 @@ public class SpnC implements LieAlgebra {
     public ArrayList<int[][]> generateSpecificMatrices(int dim) {
         ArrayList<int[][]> result = new ArrayList<>();
         if (dim % 2 == 0) {
-            int[][] matrix_fi;
             int[][] matrix_fij_1;
             int[][] matrix_fi_j;
-            int[][] nullMatrix = new int[dim][dim];
-
-            //Генерация f_i
-            for (int i = 0; i < dim; i++) {
-                for (int j = dim - 1; j >= 0; j--) {
-                    matrix_fi = new int[dim][dim];
-                    if (Arrays.deepEquals(matrix_fi, nullMatrix)) {
-                        matrix_fi[i][j] = -1;
-                        i++;
-                        result.add(matrix_fi);
-                    }
-                }
-            }
 
             //Генерация f_ij
             for (int i = 0; i < dim / 2; i++) {
@@ -78,7 +67,7 @@ public class SpnC implements LieAlgebra {
                     int k = dim / 2;
                     if ((i > k && j < k && (i + j != dim - 1)) || (i < k && j > k && (i + j != dim - 1))) {
                         matrix_fi_j = new int[dim][dim];
-                        matrix_fi_j[i][j] = 1;
+                        matrix_fi_j[i][j] = -1;
                         matrix_fi_j[(dim - 1) - j][(dim - 1) - i] = 1;
                         result.add(matrix_fi_j);
                     }
@@ -132,7 +121,7 @@ public class SpnC implements LieAlgebra {
     }
 
     @Override
-    public ArrayList<GeomVector> generateVectorsB(ArrayList<GeomVector> vectorsA,int modP) {
+    public ArrayList<GeomVector> generateVectorsB(ArrayList<GeomVector> vectorsA, int modP) {
         ArrayList<GeomVector> vectorsB = new ArrayList<>();
         for (GeomVector geomVector : vectorsA) {
             ArrayList<Integer> newCoordinates = new ArrayList<>(geomVector.getCoordinates());
@@ -145,6 +134,4 @@ public class SpnC implements LieAlgebra {
         }
         return vectorsB;
     }
-
-
 }
