@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SlnC implements LieAlgebra {
+
+
     private static MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
     private static LieAlgebra slnC = new SlnC();
 
@@ -16,6 +18,11 @@ public class SlnC implements LieAlgebra {
         ArrayList<GeomVector> vectorsA = slnC.generateVectorsA(hMatrix, eMatrix);
         ArrayList<GeomVector> vectorsB = slnC.generateVectorsB(vectorsA,modP);
         System.out.println(vectorsB);
+    }
+
+    @Override
+    public String getAlgebraName() {
+        return "Lie Algebra Sl_n(C)";
     }
 
     public ArrayList<int[][]> generateMatricesH(int dim) {

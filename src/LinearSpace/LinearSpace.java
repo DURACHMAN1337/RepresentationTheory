@@ -15,7 +15,7 @@ public class LinearSpace {
 
     public static void main(String[] args) {
         LinearSpace linearSpace = new LinearSpace();
-        LieAlgebra lieAlgebra = new SpnC();
+        LieAlgebra lieAlgebra = new SlnC();
         linearSpace.generateLinearCodeAssociatedWithAdditionalRepresentation(lieAlgebra,3,4);
     }
     
@@ -31,6 +31,7 @@ public class LinearSpace {
         ArrayList<ArrayList<Integer>> combinations = linearSpaceServiceBean.generateConstants(vectorsCount, modP); // генерация перестановок
         Set<GeomVector> linearSpace = new HashSet<GeomVector>(vectorsB);
 
+        System.out.println("Линейный код ассоцированный с присоединённым представлением для : " + lieAlgebra.getAlgebraName().replaceFirst("n", String.valueOf(dim)));
         System.out.println("-----------------Матрицы  h-----------------");
         matricesServiceBean.printListOfMatrices(matricesH);
         System.out.println("-----------------Специальные Матрицы  -----------------");

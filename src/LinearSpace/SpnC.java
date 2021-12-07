@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SpnC implements LieAlgebra {
+
+
     private static MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
     private static LieAlgebra spnC = new SpnC();
 
@@ -14,10 +16,15 @@ public class SpnC implements LieAlgebra {
         ArrayList<int[][]> matricesF = spnC.generateSpecificMatrices(4);
         ArrayList<int[][]> matricesH = spnC.generateMatricesH(4);
         ArrayList<GeomVector> vectorsA = spnC.generateVectorsA(matricesH, matricesF);
-        ArrayList<GeomVector> vectorsB = spnC.generateVectorsB(vectorsA,modP);
+        ArrayList<GeomVector> vectorsB = spnC.generateVectorsB(vectorsA, modP);
         System.out.println(vectorsA.toString());
         System.out.println(vectorsB.toString());
         matricesServiceBean.printListOfMatrices(matricesF);
+    }
+
+    @Override
+    public String getAlgebraName() {
+        return "Lie Algebra Sp_n(C)";
     }
 
     @Override
@@ -132,7 +139,7 @@ public class SpnC implements LieAlgebra {
     }
 
     @Override
-    public ArrayList<GeomVector> generateVectorsB(ArrayList<GeomVector> vectorsA,int modP) {
+    public ArrayList<GeomVector> generateVectorsB(ArrayList<GeomVector> vectorsA, int modP) {
         ArrayList<GeomVector> vectorsB = new ArrayList<>();
         for (GeomVector geomVector : vectorsA) {
             ArrayList<Integer> newCoordinates = new ArrayList<>(geomVector.getCoordinates());

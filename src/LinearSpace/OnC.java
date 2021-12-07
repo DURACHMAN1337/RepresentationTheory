@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OnC implements LieAlgebra {
+
     private static MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
     private static LieAlgebra lieAlgebra = new OnC();
 
@@ -21,6 +22,11 @@ public class OnC implements LieAlgebra {
         matricesServiceBean.printListOfMatrices(matricesH);
         System.out.println("______________________________");
         matricesServiceBean.printListOfMatrices( specificMatrices);
+    }
+
+    @Override
+    public String getAlgebraName() {
+        return  "Lie Algebra O_n(C)";
     }
 
     @Override
