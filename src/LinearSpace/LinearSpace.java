@@ -10,16 +10,16 @@ import java.util.Set;
 
 
 public class LinearSpace {
-    private static MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
-    private static LinearSpaceServiceBean linearSpaceServiceBean = new LinearSpaceServiceBean();
+    private static final MatricesServiceBean matricesServiceBean = new MatricesServiceBean();
+    private static final LinearSpaceServiceBean linearSpaceServiceBean = new LinearSpaceServiceBean();
 
     public static void main(String[] args) {
         LinearSpace linearSpace = new LinearSpace();
         LieAlgebra lieAlgebra = new SpnC();
-        linearSpace.doSomeNastyShit(lieAlgebra,3,4);
+        linearSpace.generateLinearCodeAssociatedWithAdditionalRepresentation(lieAlgebra,3,4);
     }
     
-    private void doSomeNastyShit(LieAlgebra lieAlgebra, int modP, int dim){
+    private void generateLinearCodeAssociatedWithAdditionalRepresentation(LieAlgebra lieAlgebra, int modP, int dim){
         BigInteger bigInteger = BigInteger.valueOf(modP);
 
         if (bigInteger.isProbablePrime(modP)){
