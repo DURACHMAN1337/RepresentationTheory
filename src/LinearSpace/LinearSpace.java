@@ -15,8 +15,8 @@ public class LinearSpace {
 
     public static void main(String[] args) {
         LinearSpace linearSpace = new LinearSpace();
-        LieAlgebra lieAlgebra = new SlnC();
-        linearSpace.doSomeNastyShit(lieAlgebra,3,5);
+        LieAlgebra lieAlgebra = new SpnC();
+        linearSpace.doSomeNastyShit(lieAlgebra,3,4);
     }
     
     private void doSomeNastyShit(LieAlgebra lieAlgebra, int modP, int dim){
@@ -28,7 +28,7 @@ public class LinearSpace {
         ArrayList<GeomVector> vectorsA = lieAlgebra.generateVectorsA(matricesH, matricesF); // Генерируем Векторы a
         ArrayList<GeomVector> vectorsB = lieAlgebra.generateVectorsB(vectorsA,modP); // Генерируем Векторы b
         int vectorsCount = vectorsB.size(); // Колличество векторов
-        ArrayList<ArrayList<Integer>> combinations = linearSpaceServiceBean.generateConstants(modP, vectorsCount); // генерация перестановок
+        ArrayList<ArrayList<Integer>> combinations = linearSpaceServiceBean.generateConstants(vectorsCount, modP); // генерация перестановок
         Set<GeomVector> linearSpace = new HashSet<GeomVector>(vectorsB);
 
         System.out.println("-----------------Матрицы  h-----------------");

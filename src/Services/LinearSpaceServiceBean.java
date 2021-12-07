@@ -4,6 +4,7 @@ import LinearSpace.GeomVector;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LinearSpaceServiceBean implements LinearSpaceService {
@@ -28,26 +29,38 @@ public class LinearSpaceServiceBean implements LinearSpaceService {
     }
 
     @Override
-    public ArrayList<ArrayList<Integer>> generateConstants(int mod, int dim) {
-        ArrayList<ArrayList<Integer>> combinations = new ArrayList<>();
-        ArrayList<Integer> combination = new ArrayList<>();
-        ArrayList<Integer> temp;
+    public ArrayList<ArrayList<Integer>> generateConstants(int dim, int mod) {
+        double vectorsQuantity = Math.pow(mod, dim);
+        ArrayList<ArrayList<Integer>> vectors = new ArrayList<>();
+        List<Integer> vector = getEmptyVector(dim);
+        vectors.add(new ArrayList<>(vector));
+        while (vectors.size() != vectorsQuantity) {
+            vector = iterateVector(vector, mod);
+            if (!vectors.contains(vector)) {
+                vectors.add(new ArrayList<>(vector));
+            }
+        }
+        return vectors;
+    }
 
+    private static List<Integer> getEmptyVector(int dim) {
+        List<Integer> vector = new ArrayList<>();
         for (int j = 0; j < dim; j++) {
-            combination.add(0);
+            vector.add(0);
         }
-        combinations.add(combination);
-        temp = new ArrayList<>(combination);
+        return vector;
+    }
 
-        while (combinations.size() < (int) Math.pow(mod, dim)) {
-            for (int i = 0; i < dim; i++) {
-                temp.set(i, (int) (Math.random() * mod));
-            }
-            if (!combinations.contains(temp)) {
-                combinations.add(new ArrayList<>(temp));
+    private static List<Integer> iterateVector(List<Integer> initialVector, int mod) {
+        List<Integer> vector = new ArrayList<>(initialVector);
+        for (int i = vector.size() - 1; i >= 0; i--) {
+            int iteratedInt = (vector.get(i) + 1) % mod;
+            vector.set(i, iteratedInt);
+            if (iteratedInt != 0) {
+                break;
             }
         }
-        return combinations;
+        return vector;
     }
 
     @Override
